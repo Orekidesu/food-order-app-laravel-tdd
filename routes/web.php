@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SearchProductController;
+use App\Http\Controllers\CheckoutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,19 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('search');
-});
+Route::get('/', [SearchProductController::class, 'index']);
 
-Route::get('/cart', function () {
-    return view('cart');
-});
+// Cart
+Route::get('/cart', [CartController::class, 'index']);
+Route::post('/cart', [CartController::class, 'store']);
+Route::delete('/cart/{id}', [CartController::class, 'destroy']);
+Route::patch('/cart/{id}', [CartController::class, 'update']);
+
+// Checkout
+Route::get('/checkout', [CheckoutController::class, 'index']);
+Route::post('/checkout', [CheckoutController::class, 'create']);
 
 
-Route::get('/checkout', function () {
-    return view('checkout');
-});
 
 Route::get('/summary', function () {
-    return view('summary');
+  return view('summary');
 });
+// Route::get('/summary', [CheckoutController::class, 'summary'])->name('summary');

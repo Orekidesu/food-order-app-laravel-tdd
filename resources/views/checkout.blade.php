@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Order - Cart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
+
 <body>
     <div class="container-fluid mt-5">
 
@@ -23,36 +25,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Taco</td>
-                        <td>$2.50</td>
-                        <td>1x</td>
-                        <td>$2.50</td>
-                    </tr>
-                    <tr>
-                        <td>Pizza</td>
-                        <td>$3.50</td>
-                        <td>2x</td>
-                        <td>$7.00</td>
-                    </tr>
-                    <tr>
-                        <td>Soup</td>
-                        <td>$2.00</td>
-                        <td>3x</td>
-                        <td>$6.00</td>
-                    </tr>
+
+                    @foreach ($checkout_items as $item)
+                        <tr>
+                            <td>{{ $item['name'] }}</td>
+                            <td>${{ $item['cost'] }}</td>
+                            <td>{{ $item['qty'] }}x</td>
+                            <td>${{ $item['subtotal'] }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
             <div>
-                Total: $15.50
+                Total: ${{ $total }}
             </div>
 
 
-            <button type="submit" class="btn btn-primary btn-lg float-end">Submit Order</button>
+
+
+
+            <form action="/checkout" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary btn-lg float-end">Submit Order</button>
+            </form>
+
+
 
         </div>
 
     </div>
 </body>
+
 </html>
